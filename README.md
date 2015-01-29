@@ -6,6 +6,7 @@ User: ubuntu, with passwordless sudo
 
 1) Create necessary host groups in your ansible inventory file
 	/etc/ansible/hosts
+
 	[es-balancer]
 	192.168.66.1
 
