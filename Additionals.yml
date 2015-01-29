@@ -1,0 +1,14 @@
+# Additionals.yml
+---
+- hosts: es-balancer:es-node 
+  sudo: True
+  user: ubuntu
+  tasks:
+
+    - name: 1. install vim
+      apt: name=vim state=present
+
+    - name: 2. install ncdu
+      apt: name=ncdu state=present
+
+

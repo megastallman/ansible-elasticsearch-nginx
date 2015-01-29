@@ -1,0 +1,9 @@
+# post-actions.yml
+---
+- hosts: es-balancer
+  sudo: True
+  user: ubuntu
+  tasks:
+
+    - name: restart nginx
+      service: name=nginx state=restarted

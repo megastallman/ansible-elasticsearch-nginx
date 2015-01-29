@@ -1,0 +1,30 @@
+# java8.yml
+---
+- hosts: es-node
+  sudo: True
+  user: ubuntu
+
+  vars: 
+     - jversion: '0'
+
+  tasks:
+
+    - name: 0. get java version
+      shell: '/usr/bin/java -version 2>&1 >/dev/null | grep version | cut -d "." -f 2'
+      register: jversion
+      ignore_errors: True
+
+#    - name: 0. debug
+#      debug: var=jversion
+
+    - name: 1. add oracle java ppa
+      apt_repository: repo='ppa:webupd8team/java' state=present update_cache=yes
+
+    - name: 2. accept necrolicence
+      action: shell echo 'oracle-java8-installer shared/accepted-oracle-license-v1-1 select true' | debconf-set-selections
+      when: jversion.stdout != '8'
+
+    - name: 3. install oracle-java8-installer
+      apt: name=oracle-java8-installer state=present
+
+

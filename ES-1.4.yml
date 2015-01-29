@@ -1,0 +1,34 @@
+# playbook.yml
+---
+- hosts: es-node
+  sudo: True
+  user: ubuntu
+
+  tasks:
+
+    - name: 1. add apt-key
+      apt_key: url=http://packages.elasticsearch.org/GPG-KEY-elasticsearch state=present
+
+    - name: 2. install repo
+      apt_repository: repo='deb http://packages.elasticsearch.org/elasticsearch/1.4/debian stable main' state=present update_cache=yes
+
+    - name: 3. install elasticsearch
+      apt: name=elasticsearch state=present
+      
+    - name: 4. ephemeral disk data directory
+      file: path=/mnt/elasticsearch state=directory owner=elasticsearch group=elasticsearch
+
+    - name: 5. configure elasticsearch.yml
+      template: src=elasticsearch.yml.j2 dest=/etc/elasticsearch/elasticsearch.yml
+
+    - name: 6. ifhead
+      stat: path=/usr/share/elasticsearch/plugins/head
+      register: ifhead
+
+    - name: 7. install head plugin
+      shell: /usr/share/elasticsearch/bin/plugin -install mobz/elasticsearch-head
+      when: ifhead.stat.exists == False
+
+    - name: 8. enable service
+      service: name=elasticsearch enabled=yes state=started
+

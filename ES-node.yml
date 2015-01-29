@@ -1,0 +1,4 @@
+---
+# file: ES-node.yml
+    - include: java8-for-ubuntu.yml
+    - include: ES-1.4.yml 

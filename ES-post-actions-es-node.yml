@@ -1,0 +1,9 @@
+# post-actions.yml
+---
+- hosts: es-node
+  sudo: True
+  user: ubuntu
+  tasks:
+
+    - name: restart elasticsearch
+      service: name=elasticsearch state=restarted

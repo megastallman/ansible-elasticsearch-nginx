@@ -1,0 +1,7 @@
+---
+# file: ES.yml
+   - include: Additionals.yml
+   - include: ES-node.yml
+   - include: ES-balancer.yml
+   - include: ES-post-actions-es-balancer.yml
+   - include: ES-post-actions-es-node.yml

@@ -1,0 +1,24 @@
+---
+- hosts: es-balancer
+  sudo: True
+  user: ubuntu
+  tasks:
+    - name: Installs nginx web server
+      apt: pkg=nginx state=latest update_cache=true
+      notify:
+        - start nginx
+
+    - name: Upload nginx config
+      template: src=es-proxy.j2 dest=/etc/nginx/sites-available/es-proxy
+
+    - name: Remove default nginx config
+      file: path=/etc/nginx/sites-enabled/default state=absent
+
+    - name: Add symlink to es-proxy config
+      file: src=/etc/nginx/sites-available/es-proxy dest=/etc/nginx/sites-enabled/es-proxy state=link
+
+  handlers:
+    - name: start nginx
+      service: name=nginx state=started
+
+
