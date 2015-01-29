@@ -21,7 +21,5 @@ ansible-playbook ES.yml
 Many necessary defaults are predefined. Such as:
 - Oracle java 8
 - Cluster name test-elasticsearch (elasticsearch.yml.j2: cluster.name: test-elasticsearch)
-- Separate ES data directory (you can just remove: 
-		elasticsearch.yml.j2: path.data: /mnt/elasticsearch
-		ES-1.4: task 4)
+- Separate ES data directory (you can just remove: "path.data: /mnt/elasticsearch" in elasticsearch.yml.j2 file and task 4 in ES-1.4 file)
 
